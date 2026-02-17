@@ -70,7 +70,10 @@
 
 <body>
     <nav class="navbar">
-        <a href="../index.html" class="nav-brand">Wood Hub</a>
+        <a href="../index.html" class="nav-brand">
+            <img src="../assets/images/logo/Logo.jpg" alt="Wood Hub" class="nav-logo">
+            Wood Hub
+        </a>
         <ul class="nav-links">
             <li><a href="../index.html" class="nav-link">Home</a></li>
             <li><a href="../products.html" class="nav-link active">Products</a></li>
@@ -114,8 +117,7 @@
             <div class="detail-container">
                 <!-- Left: Info & Reference -->
                 <div>
-                    <img id="product-image" src="../assets/cat-wood.svg" alt="Product"
-                        style="width: 100%; border-radius: var(--radius-lg); margin-bottom: 2rem; box-shadow: var(--shadow-sm);">
+                    <img id="product-image" src="../assets/cat-wood.svg" alt="Product" class="product-detail-image">
                 </div>
 
                 <!-- Right: Configuration Form -->
@@ -123,6 +125,20 @@
                     <h1 id="product-title" style="margin-bottom: 2rem;">Product Name</h1>
 
                     <form id="quotation-form">
+                        <div class="form-group">
+                            <label>Wood Type</label>
+                            <select name="wood_type" required>
+                                <option value="" disabled selected>Select Wood Type</option>
+                                <option value="Teak Wood">Teak Wood</option>
+                                <option value="Sal Wood">Sal Wood</option>
+                                <option value="Plywood">Plywood</option>
+                                <option value="Sheesham Wood">Sheesham Wood</option>
+                                <option value="Mango Wood">Mango Wood</option>
+                                <option value="Oak Wood">Oak Wood</option>
+                                <option value="Pine Wood">Pine Wood</option>
+                            </select>
+                        </div>
+
                         <div class="form-group">
                             <label>Length (ft/inch)</label>
                             <input type="text" name="length" placeholder="e.g. 7 ft" required>

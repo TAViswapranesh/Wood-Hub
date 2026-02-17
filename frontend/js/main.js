@@ -52,6 +52,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Cart Count Update (Mock)
     updateCartCount();
+
+    // Login Form Submission
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('login-name').value;
+            const mobile = document.getElementById('login-mobile').value;
+
+            if (name && mobile) {
+                const user = { name, mobile };
+                localStorage.setItem('woodhub_user', JSON.stringify(user));
+
+                // Update UI (optional, closes modal for now)
+                const modal = document.getElementById('login-modal');
+                if (modal) modal.classList.remove('active');
+
+                alert('Logged in successfully!');
+
+                // If on contact page, reload to trigger pre-fill or just call it if we exposed function
+                if (window.location.pathname.includes('contact.html')) {
+                    window.location.reload();
+                }
+            }
+        });
+    }
 });
 
 function updateCartCount() {
