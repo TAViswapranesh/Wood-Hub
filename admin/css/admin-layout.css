@@ -39,13 +39,13 @@ body {
 
 .admin-sidebar-header {
     padding: var(--admin-space-xl) var(--admin-space-lg);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--admin-border-light);
 }
 
 .admin-sidebar-logo {
     font-size: var(--admin-font-2xl);
     font-weight: var(--admin-font-bold);
-    color: var(--admin-text-inverse);
+    color: var(--admin-primary);
     text-decoration: none;
     display: block;
 }
@@ -152,6 +152,23 @@ body {
 
 .login-header p {
     color: var(--admin-text-secondary);
+}
+
+/* Login Form Inputs */
+/* Reverted to default theme colors */
+.login-box .form-label {
+    color: var(--admin-text-primary);
+}
+
+.login-box .form-control {
+    background-color: var(--admin-bg-secondary);
+    border-color: var(--admin-border-light);
+    color: var(--admin-text-primary);
+}
+
+.login-box .form-control:focus {
+    border-color: var(--admin-primary);
+    background-color: var(--admin-bg-primary);
 }
 
 /* Grid System */

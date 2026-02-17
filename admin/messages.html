@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quotations - Wood Hub Admin</title>
+    <title>Messages - Wood Hub Admin</title>
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -13,6 +13,21 @@
     <link rel="stylesheet" href="css/admin-variables.css">
     <link rel="stylesheet" href="css/admin-layout.css">
     <link rel="stylesheet" href="css/admin-components.css">
+    <style>
+        /* Table Spacing Fix */
+        .table th,
+        .table td {
+            padding: 1.25rem 1.5rem !important;
+            /* Increased padding */
+        }
+
+        .table {
+            width: 100%;
+            /* Ensure full width */
+            border-collapse: collapse;
+            /* Ensure borders collapse for cleaner look */
+        }
+    </style>
 </head>
 
 <body>
@@ -29,10 +44,10 @@
                 <a href="dashboard.html" class="admin-nav-item">
                     <i class="fas fa-chart-line"></i> Dashboard
                 </a>
-                <a href="quotations.html" class="admin-nav-item active">
+                <a href="quotations.html" class="admin-nav-item">
                     <i class="fas fa-file-invoice"></i> Quotations
                 </a>
-                <a href="messages.html" class="admin-nav-item">
+                <a href="messages.html" class="admin-nav-item active">
                     <i class="fas fa-envelope"></i> Messages
                 </a>
                 <a href="hardware.html" class="admin-nav-item">
@@ -50,25 +65,31 @@
         <!-- Main Content -->
         <main class="admin-main">
             <div class="admin-header">
-                <h1>Quotation Requests</h1>
-                <p>View and manage customer quotation requests</p>
+                <h1>Messages</h1>
+                <p>View and manage customer inquiries</p>
             </div>
 
             <div class="admin-content">
                 <div class="admin-card">
                     <div class="admin-card-header">
-                        <h2 class="admin-card-title">All Quotations</h2>
+                        <h2 class="admin-card-title">Recent Messages</h2>
                     </div>
                     <div class="admin-card-body">
-                        <div class="alert alert-info mb-lg">
-                            <i class="fas fa-info-circle"></i>
-                            <strong>Note:</strong> These are quotation requests submitted by customers through the
-                            website.
-                            Click "View Details" to see full information or "Contact" to reach out via WhatsApp.
-                        </div>
-
-                        <div id="quotations-list">
-                            <div class="spinner"></div>
+                        <div class="table-responsive">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Name</th>
+                                        <th>Mobile</th>
+                                        <th>Email</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="messages-table-body">
+                                    <!-- Messages will be loaded here -->
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -76,24 +97,13 @@
         </main>
     </div>
 
-    <!-- Quotation Details Modal -->
-    <div id="quotation-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Quotation Details</h2>
-                <button id="modal-close" class="modal-close">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div id="modal-quotation-details">
-                <!-- Details populated by JS -->
-            </div>
-        </div>
-    </div>
-
     <!-- Scripts -->
     <script src="js/admin-auth.js"></script>
-    <script src="js/admin-quotations.js"></script>
+    <script src="js/admin-messages.js"></script>
+    <script>
+        // Initialize messages page if needed, or rely on admin-messages.js to auto-run
+        // create dummy data if needed for visualization (handled by admin-messages.js likely)
+    </script>
 </body>
 
 </html>

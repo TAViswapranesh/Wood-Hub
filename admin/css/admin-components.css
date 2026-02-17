@@ -37,35 +37,87 @@
 
 /* Stats Cards */
 .stats-card {
-    background: linear-gradient(135deg, var(--admin-primary) 0%, var(--admin-primary-dark) 100%);
-    color: var(--admin-text-inverse);
+    background: var(--admin-bg-primary);
+    color: var(--admin-text-primary);
     border: none;
+    border-radius: var(--admin-radius-lg);
     padding: var(--admin-space-xl);
+    position: relative;
+    overflow: hidden;
+    transition: transform var(--admin-transition-base), box-shadow var(--admin-transition-base);
+    z-index: 1;
+    box-shadow: var(--admin-shadow-lg);
+    /* Stronger initial shadow */
+}
+
+.stats-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 100%);
+    /* Slightly stronger highlight */
+    z-index: -1;
+    opacity: 0.4;
+}
+
+.stats-card:hover {
+    transform: translateY(-8px);
+    /* Higher Lift */
+    box-shadow: var(--admin-shadow-2xl);
+    /* Deep Shadow on Hover */
 }
 
 .stats-card .stats-number {
-    font-size: var(--admin-font-4xl);
-    font-weight: var(--admin-font-bold);
-    margin: var(--admin-space-md) 0;
+    font-size: 3rem;
+    font-weight: 800;
+    margin: var(--admin-space-sm) 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: #ffffff;
 }
 
 .stats-card .stats-label {
-    font-size: var(--admin-font-sm);
-    opacity: 0.9;
+    font-size: var(--admin-font-base);
+    opacity: 0.95;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: var(--admin-space-md);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.stats-card .stats-label i {
+    font-size: 1.5rem;
+    padding: var(--admin-space-sm);
+    border-radius: var(--admin-radius-md);
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+}
+
+/* Card Variations with Gradients */
+.stats-card {
+    background: var(--admin-gradient-primary);
 }
 
 .stats-card.success {
-    background: linear-gradient(135deg, var(--admin-success) 0%, #059669 100%);
+    background: var(--admin-gradient-success);
+}
+
+.stats-card.success .stats-label i {
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 .stats-card.warning {
-    background: linear-gradient(135deg, var(--admin-warning) 0%, #d97706 100%);
+    background: var(--admin-gradient-warning);
 }
 
 .stats-card.info {
-    background: linear-gradient(135deg, var(--admin-info) 0%, #0891b2 100%);
+    background: var(--admin-gradient-info);
 }
 
 /* Buttons */
@@ -246,15 +298,30 @@ textarea.form-control {
 .admin-table th {
     padding: var(--admin-space-md);
     text-align: left;
+    /* Explicit Left Align */
     font-weight: var(--admin-font-semibold);
     color: var(--admin-text-primary);
     border-bottom: 2px solid var(--admin-border-medium);
+    white-space: nowrap;
+    /* Prevent wrapping for headers */
+}
+
+/* Ensure last column (Actions) is aligned properly if needed */
+.admin-table th:last-child,
+.admin-table td:last-child {
+    text-align: right;
+    width: 1%;
+    white-space: nowrap;
 }
 
 .admin-table td {
     padding: var(--admin-space-md);
     border-bottom: 1px solid var(--admin-border-light);
     color: var(--admin-text-secondary);
+    text-align: left;
+    /* Explicit Left Align */
+    vertical-align: middle;
+    /* Vertical Center */
 }
 
 .admin-table tbody tr:hover {
