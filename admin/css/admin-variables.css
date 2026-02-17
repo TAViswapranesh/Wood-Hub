@@ -1,0 +1,119 @@
+/* ===================================
+   ADMIN PANEL - CSS VARIABLES
+   =================================== */
+
+:root {
+    /* Color Palette - Neutral Admin Theme */
+    --admin-primary: #2563eb;
+    --admin-primary-dark: #1e40af;
+    --admin-primary-light: #3b82f6;
+    
+    --admin-secondary: #64748b;
+    --admin-secondary-dark: #475569;
+    --admin-secondary-light: #94a3b8;
+    
+    --admin-success: #10b981;
+    --admin-warning: #f59e0b;
+    --admin-danger: #ef4444;
+    --admin-info: #06b6d4;
+    
+    /* Background Colors */
+    --admin-bg-primary: #ffffff;
+    --admin-bg-secondary: #f8fafc;
+    --admin-bg-tertiary: #f1f5f9;
+    --admin-bg-dark: #1e293b;
+    
+    /* Text Colors */
+    --admin-text-primary: #0f172a;
+    --admin-text-secondary: #475569;
+    --admin-text-tertiary: #94a3b8;
+    --admin-text-inverse: #ffffff;
+    
+    /* Border Colors */
+    --admin-border-light: #e2e8f0;
+    --admin-border-medium: #cbd5e1;
+    --admin-border-dark: #94a3b8;
+    
+    /* Sidebar */
+    --admin-sidebar-bg: #1e293b;
+    --admin-sidebar-text: #e2e8f0;
+    --admin-sidebar-hover: #334155;
+    --admin-sidebar-active: #2563eb;
+    
+    /* Typography Scale */
+    --admin-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --admin-font-mono: 'Courier New', monospace;
+    
+    --admin-font-xs: 0.75rem;      /* 12px */
+    --admin-font-sm: 0.875rem;     /* 14px */
+    --admin-font-base: 1rem;       /* 16px */
+    --admin-font-lg: 1.125rem;     /* 18px */
+    --admin-font-xl: 1.25rem;      /* 20px */
+    --admin-font-2xl: 1.5rem;      /* 24px */
+    --admin-font-3xl: 1.875rem;    /* 30px */
+    --admin-font-4xl: 2.25rem;     /* 36px */
+    
+    /* Font Weights */
+    --admin-font-normal: 400;
+    --admin-font-medium: 500;
+    --admin-font-semibold: 600;
+    --admin-font-bold: 700;
+    
+    /* Spacing System */
+    --admin-space-xs: 0.25rem;     /* 4px */
+    --admin-space-sm: 0.5rem;      /* 8px */
+    --admin-space-md: 1rem;        /* 16px */
+    --admin-space-lg: 1.5rem;      /* 24px */
+    --admin-space-xl: 2rem;        /* 32px */
+    --admin-space-2xl: 3rem;       /* 48px */
+    --admin-space-3xl: 4rem;       /* 64px */
+    
+    /* Border Radius */
+    --admin-radius-sm: 0.25rem;    /* 4px */
+    --admin-radius-md: 0.5rem;     /* 8px */
+    --admin-radius-lg: 0.75rem;    /* 12px */
+    --admin-radius-xl: 1rem;       /* 16px */
+    --admin-radius-full: 9999px;
+    
+    /* Shadows */
+    --admin-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --admin-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --admin-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --admin-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    
+    /* Layout */
+    --admin-sidebar-width: 260px;
+    --admin-header-height: 64px;
+    --admin-container-max: 1400px;
+    
+    /* Transitions */
+    --admin-transition-fast: 150ms ease-in-out;
+    --admin-transition-base: 250ms ease-in-out;
+    --admin-transition-slow: 350ms ease-in-out;
+    
+    /* Z-index Scale */
+    --admin-z-dropdown: 1000;
+    --admin-z-sticky: 1020;
+    --admin-z-fixed: 1030;
+    --admin-z-modal-backdrop: 1040;
+    --admin-z-modal: 1050;
+    --admin-z-popover: 1060;
+    --admin-z-tooltip: 1070;
+}
+
+/* Dark Mode Support (Optional) */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --admin-bg-primary: #0f172a;
+        --admin-bg-secondary: #1e293b;
+        --admin-bg-tertiary: #334155;
+        
+        --admin-text-primary: #f1f5f9;
+        --admin-text-secondary: #cbd5e1;
+        --admin-text-tertiary: #64748b;
+        
+        --admin-border-light: #334155;
+        --admin-border-medium: #475569;
+        --admin-border-dark: #64748b;
+    }
+}

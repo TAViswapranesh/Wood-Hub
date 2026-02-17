@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Wood Hub Admin</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Admin Styles -->
+    <link rel="stylesheet" href="css/admin-variables.css">
+    <link rel="stylesheet" href="css/admin-layout.css">
+    <link rel="stylesheet" href="css/admin-components.css">
+</head>
+
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-header">
+                <a href="dashboard.html" class="admin-sidebar-logo">
+                    <i class="fas fa-tree"></i> Wood <span>Hub</span>
+                </a>
+            </div>
+
+            <nav class="admin-nav">
+                <a href="dashboard.html" class="admin-nav-item">
+                    <i class="fas fa-chart-line"></i> Dashboard
+                </a>
+                <a href="hardware.html" class="admin-nav-item">
+                    <i class="fas fa-tools"></i> Hardware
+                </a>
+                <a href="gallery.html" class="admin-nav-item">
+                    <i class="fas fa-images"></i> Gallery
+                </a>
+                <a href="quotations.html" class="admin-nav-item">
+                    <i class="fas fa-file-invoice"></i> Quotations
+                </a>
+                <a href="#" id="logout-btn" class="admin-nav-item" style="margin-top: auto;">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <div class="admin-header">
+                <h1>Dashboard</h1>
+                <p>Welcome back, <span class="admin-username">Admin</span></p>
+            </div>
+
+            <div class="admin-content">
+                <!-- Statistics Cards -->
+                <div class="admin-grid admin-grid-3">
+                    <div class="admin-card stats-card">
+                        <div class="stats-label">
+                            <i class="fas fa-file-invoice"></i> Quotation Requests
+                        </div>
+                        <div class="stats-number" id="quotation-count">0</div>
+                    </div>
+
+                    <div class="admin-card stats-card success">
+                        <div class="stats-label">
+                            <i class="fas fa-tools"></i> Hardware Items
+                        </div>
+                        <div class="stats-number" id="hardware-count">0</div>
+                    </div>
+
+                    <div class="admin-card stats-card info">
+                        <div class="stats-label">
+                            <i class="fas fa-images"></i> Gallery Images
+                        </div>
+                        <div class="stats-number" id="gallery-count">0</div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="admin-card mt-xl">
+                    <div class="admin-card-header">
+                        <h2 class="admin-card-title">Quick Actions</h2>
+                    </div>
+                    <div class="admin-card-body">
+                        <div class="flex flex-gap-md">
+                            <a href="hardware.html" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Add Hardware
+                            </a>
+                            <a href="gallery.html" class="btn btn-success">
+                                <i class="fas fa-upload"></i> Upload Images
+                            </a>
+                            <a href="quotations.html" class="btn btn-info">
+                                <i class="fas fa-eye"></i> View Quotations
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity Info -->
+                <div class="admin-card mt-xl">
+                    <div class="admin-card-header">
+                        <h2 class="admin-card-title">About Admin Panel</h2>
+                    </div>
+                    <div class="admin-card-body">
+                        <p style="color: var(--admin-text-secondary); line-height: 1.8;">
+                            This admin panel allows you to manage Wood Hub content and view customer quotation requests.
+                            All data is currently stored in browser localStorage. Navigate using the sidebar to:
+                        </p>
+                        <ul
+                            style="margin-top: var(--admin-space-md); color: var(--admin-text-secondary); line-height: 2;">
+                            <li><strong>Hardware:</strong> Add, edit, and delete hardware products</li>
+                            <li><strong>Gallery:</strong> Upload and manage gallery images</li>
+                            <li><strong>Quotations:</strong> View customer quotation requests</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/admin-auth.js"></script>
+    <script src="js/admin-dashboard.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hardware - Wood Hub</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .hardware-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        @media(max-width: 768px) {
+            .hardware-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+                /* simple mobile hide for now */
+            }
+        }
+
+        .sidebar {
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .filter-group {
+            margin-bottom: 2rem;
+        }
+
+        .filter-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--color-primary);
+        }
+
+        .filter-item {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--color-text-light);
+            cursor: pointer;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius-md);
+            margin-bottom: 2rem;
+            font-family: var(--font-body);
+        }
+
+        .hardware-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .hw-card {
+            background: #fff;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s;
+        }
+
+        .hw-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .hw-img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            background: #f0f0f0;
+        }
+
+        .hw-content {
+            padding: 1rem;
+        }
+
+        .hw-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .hw-meta {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="../index.html" class="nav-brand">Wood Hub</a>
+        <ul class="nav-links">
+            <li><a href="../index.html" class="nav-link">Home</a></li>
+            <li><a href="../products.html" class="nav-link active">Products</a></li>
+            <li><a href="../gallery.html" class="nav-link">Gallery</a></li>
+            <li><a href="../contact.html" class="nav-link">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+            <div class="nav-icon user-icon"><i class="fa-solid fa-user"></i></div>
+            <div class="nav-icon" onclick="window.location.href='quotation.html'">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="cart-count">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 class="text-center" style="margin-bottom: 1.5rem;">One-Time Login</h2>
+            <form id="login-form-modal">
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Phone Number</label>
+                    <input type="tel" id="user-phone" placeholder="Enter your mobile number" required
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Verify & Continue</button>
+            </form>
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="container">
+            <div class="hardware-layout">
+                <!-- Sidebar -->
+                <aside class="sidebar">
+                    <div class="filter-group">
+                        <div class="filter-title">Categories</div>
+                        <div class="filter-item"><input type="checkbox"> Door Handles</div>
+                        <div class="filter-item"><input type="checkbox"> Locks</div>
+                        <div class="filter-item"><input type="checkbox"> Hinges</div>
+                        <div class="filter-item"><input type="checkbox"> Kitchen Fittings</div>
+                        <div class="filter-item"><input type="checkbox"> Adhesives</div>
+                    </div>
+                    <div class="filter-group">
+                        <div class="filter-title">Finish</div>
+                        <div class="filter-item"><input type="checkbox"> Matte Black</div>
+                        <div class="filter-item"><input type="checkbox"> Gold / Brass</div>
+                        <div class="filter-item"><input type="checkbox"> Steel</div>
+                    </div>
+                </aside>
+
+                <!-- Main Content -->
+                <main>
+                    <input type="text" class="search-bar" placeholder="Search for hardware products...">
+
+                    <h2 style="margin-bottom: 1.5rem;">Hardware Catalog</h2>
+                    <p style="margin-bottom: 2rem; color: #666;">Select items to add to your quotation request.</p>
+
+                    <div class="hardware-grid">
+                        <!-- Mock Item 1 -->
+                        <div class="hw-card">
+                            <!-- Image removed as per instruction -->
+                            <div class="hw-content">
+                                <div class="hw-title">Premium Door Handle</div>
+                                <div class="hw-meta">Size: 8 inch | Gold Finish</div>
+                                <button class="btn btn-outline" style="width: 100%; padding: 6px; font-size: 0.9rem;"
+                                    onclick="addToCart('Door Handle', '8 inch - Gold')">Add to Quote</button>
+                            </div>
+                        </div>
+
+                        <!-- Mock Item 2 -->
+                        <div class="hw-card">
+                            <!-- Image removed as per instruction -->
+                            <div class="hw-content">
+                                <div class="hw-title">Mortise Lock Set</div>
+                                <div class="hw-meta">Heavy Duty | SS Finish</div>
+                                <button class="btn btn-outline" style="width: 100%; padding: 6px; font-size: 0.9rem;"
+                                    onclick="addToCart('Mortise Lock', 'SS Finish')">Add to Quote</button>
+                            </div>
+                        </div>
+
+                        <!-- Mock Item 3 -->
+                        <div class="hw-card">
+                            <!-- Image removed as per instruction -->
+                            <div class="hw-content">
+                                <div class="hw-title">Soft Close Hinge</div>
+                                <div class="hw-meta">110 Degree | Nickel</div>
+                                <button class="btn btn-outline" style="width: 100%; padding: 6px; font-size: 0.9rem;"
+                                    onclick="addToCart('Soft Close Hinge', 'Nickel')">Add to Quote</button>
+                            </div>
+                        </div>
+
+                        <!-- Mock Item 4 -->
+                        <div class="hw-card">
+                            <!-- Image removed as per instruction -->
+                            <div class="hw-content">
+                                <div class="hw-title">Wood Adhesive</div>
+                                <div class="hw-meta">5kg Bucket</div>
+                                <button class="btn btn-outline" style="width: 100%; padding: 6px; font-size: 0.9rem;"
+                                    onclick="addToCart('Wood Adhesive', '5kg')">Add to Quote</button>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Wood Hub</h3>
+                    <p style="color: #aaa; line-height: 1.6;">Your one-stop destination for premium wood, custom
+                        furniture, and precision CNC works.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../products.html">Products</a></li>
+                        <li><a href="../gallery.html">Gallery</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fa-solid fa-phone" style="margin-right: 10px;"></i> +91 98765
+                                43210</a></li>
+                        <li><a href="#"><i class="fa-solid fa-envelope" style="margin-right: 10px;"></i>
+                                info@woodhub.com</a></li>
+                        <li><a href="#"><i class="fa-solid fa-map-location-dot" style="margin-right: 10px;"></i>
+                                Industrial Area, City Name</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2024 Wood Hub. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <div class="floating-actions">
+        <a href="https://wa.me/919876543210" target="_blank" class="float-btn btn-whatsapp"><i
+                class="fa-brands fa-whatsapp"></i></a>
+        <a href="tel:+919876543210" class="float-btn btn-call"><i class="fa-solid fa-phone"></i></a>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Check login logic duplicated or shared
+        document.getElementById('login-form-modal').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const phone = document.getElementById('user-phone').value;
+            if (phone) {
+                localStorage.setItem('woodhub_user', phone);
+                document.getElementById('login-modal').classList.remove('active');
+                alert('Login Successful!');
+            }
+        });
+
+        function addToCart(name, spec) {
+            const isLoggedIn = localStorage.getItem('woodhub_user');
+            if (!isLoggedIn) {
+                document.getElementById('login-modal').classList.add('active');
+                return;
+            }
+
+            const item = {
+                id: Date.now(),
+                type: 'Hardware',
+                details: {
+                    name: name,
+                    spec: spec,
+                    quantity: 1
+                }
+            };
+
+            const cart = JSON.parse(localStorage.getItem('woodhub_cart')) || [];
+            cart.push(item);
+            localStorage.setItem('woodhub_cart', JSON.stringify(cart));
+
+            // Update badge (mock)
+            const count = document.querySelector('.cart-count');
+            if (count) count.textContent = cart.length;
+
+            alert('Added ' + name + ' to Quotation!');
+        }
+    </script>
+</body>
+
+</html>

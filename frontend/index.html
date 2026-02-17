@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wood Hub - Premium Wood & Furniture Solutions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="nav-brand">
+            <img src="assets/images/logo/Logo.jpg" alt="Wood Hub" class="nav-logo">
+            Wood Hub
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="products.html" class="nav-link">Products</a></li>
+            <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+            <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+            <!-- User Login -->
+            <div class="nav-icon user-icon">
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <!-- Cart -->
+            <div class="nav-icon" onclick="window.location.href='pages/quotation.html'">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="cart-count">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 class="text-center" style="margin-bottom: 1.5rem;">Welcome Back</h2>
+            <form id="login-form">
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Phone Number</label>
+                    <input type="tel" placeholder="Enter your mobile number"
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: var(--radius-sm);">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Login to Continue</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1 class="hero-title">Wood Hub</h1>
+        <p class="hero-subtitle">Crafting Excellence in Every Detail</p>
+        <a href="#products" class="btn btn-outline" style="border-color: #fff; color: #fff;">Explore Collection</a>
+
+        <div class="scroll-indicator">
+            <i class="fa-solid fa-chevron-down" style="font-size: 2rem;"></i>
+        </div>
+    </section>
+
+    <!-- Products Preview -->
+    <section id="products" class="section products-preview">
+        <div class="container">
+            <h2 class="text-center" style="margin-bottom: 3rem;">Our Collections</h2>
+            <div class="preview-grid">
+                <!-- Wood Card -->
+                <article class="card" onclick="window.location.href='pages/wood.html'">
+                    <div class="card-image-container">
+                        <img src="assets/images/product/main/wood.jpg" alt="Wood" class="card-image">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Wood</h3>
+                        <p class="card-description">Premium quality timber for doors, frames, and windows. Teak, Sal,
+                            and more.</p>
+                    </div>
+                </article>
+
+                <!-- Furniture Card -->
+                <article class="card" onclick="window.location.href='pages/furniture.html'">
+                    <div class="card-image-container">
+                        <img src="assets/images/product/main/furniture.jpg" alt="Furniture" class="card-image">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Furniture</h3>
+                        <p class="card-description">Elegant sofas, beds, tables, and custom cupboard works designed for
+                            your home.</p>
+                    </div>
+                </article>
+
+                <!-- Hardware Card -->
+                <article class="card" onclick="window.location.href='pages/hardware.html'">
+                    <div class="card-image-container">
+                        <img src="assets/images/product/main/hardware.jpg" alt="Hardware" class="card-image">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Hardware</h3>
+                        <p class="card-description">Essential fittings, handles, and accessories for all your joinery
+                            needs.</p>
+                    </div>
+                </article>
+
+                <!-- CNC Card -->
+                <article class="card" onclick="window.location.href='pages/cnc.html'">
+                    <div class="card-image-container">
+                        <img src="assets/images/product/main/cnc.jpg" alt="CNC" class="card-image">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">CNC Carving</h3>
+                        <p class="card-description">Precision 2D & 3D carving on wood and metal for intricate designs.
+                        </p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section class="section trust-section">
+        <div class="container">
+            <div class="trust-grid">
+                <div class="trust-item">
+                    <i class="fa-solid fa-medal trust-icon"></i>
+                    <h3 class="trust-title">Premium Quality</h3>
+                    <p class="trust-desc">Sourced from the finest materials to ensure durability and elegance.</p>
+                </div>
+                <div class="trust-item">
+                    <i class="fa-solid fa-compass-drafting trust-icon"></i>
+                    <h3 class="trust-title">Expert Craftsmanship</h3>
+                    <p class="trust-desc">Decades of experience in woodworking and modern CNC technology.</p>
+                </div>
+                <div class="trust-item">
+                    <i class="fa-solid fa-handshake trust-icon"></i>
+                    <h3 class="trust-title">Trusted Service</h3>
+                    <p class="trust-desc">Personalized attention and guaranteed call-backs within 36 hours.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Wood Hub</h3>
+                    <p style="color: #aaa; line-height: 1.6;">Your one-stop destination for premium wood, custom
+                        furniture, and precision CNC works.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fa-solid fa-phone" style="margin-right: 10px;"></i> +91 98765
+                                43210</a></li>
+                        <li><a href="#"><i class="fa-solid fa-envelope" style="margin-right: 10px;"></i>
+                                info@woodhub.com</a></li>
+                        <li><a href="#"><i class="fa-solid fa-map-location-dot" style="margin-right: 10px;"></i>
+                                Industrial Area, City Name</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2024 Wood Hub. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Actions -->
+    <div class="floating-actions">
+        <a href="https://wa.me/919876543210?text=Hi, I am interested in your services." target="_blank"
+            class="float-btn btn-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i>
+        </a>
+        <a href="tel:+919876543210" class="float-btn btn-call">
+            <i class="fa-solid fa-phone"></i>
+        </a>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

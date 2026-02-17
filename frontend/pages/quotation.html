@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Quotation - Wood Hub</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .cart-table th,
+        .cart-table td {
+            text-align: left;
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-table th {
+            background: #f9f9f9;
+            font-weight: 600;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 4rem;
+            color: #888;
+        }
+
+        @media(max-width: 768px) {
+            .cart-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
+        .success-box {
+            background: #E8F5E9;
+            color: #2E7D32;
+            padding: 2rem;
+            text-align: center;
+            border-radius: var(--radius-md);
+            display: none;
+            border: 1px solid #C8E6C9;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="../index.html" class="nav-brand">Wood Hub</a>
+        <ul class="nav-links">
+            <li><a href="../index.html" class="nav-link">Home</a></li>
+            <li><a href="../products.html" class="nav-link">Products</a></li>
+            <li><a href="../gallery.html" class="nav-link">Gallery</a></li>
+            <li><a href="../contact.html" class="nav-link">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+            <div class="nav-icon user-icon"><i class="fa-solid fa-user"></i></div>
+            <div class="nav-icon active" style="color: var(--color-primary);">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="cart-count">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="section">
+        <div class="container">
+            <h1 class="text-center" style="margin-bottom: 2rem;">Your Quotation Request</h1>
+
+            <div id="success-message" class="success-box">
+                <i class="fa-solid fa-circle-check" style="font-size: 3rem; margin-bottom: 0.5rem;"></i>
+                <h2>Request Submitted!</h2>
+                <p>Thank you. We will contact you within 36 hours to discuss your requirements and pricing.</p>
+                <button class="btn btn-outline" style="margin-top: 1.5rem; border-color: #2E7D32; color: #2E7D32;"
+                    onclick="window.location.href='../index.html'">Back to Home</button>
+            </div>
+
+            <div id="cart-content">
+                <table class="cart-table" id="cart-table">
+                    <thead>
+                        <tr>
+                            <th>Product Type</th>
+                            <th>Details</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cart-body">
+                        <!-- Items rendered via JS -->
+                    </tbody>
+                </table>
+
+                <div style="margin-top: 2rem; text-align: right;">
+                    <button class="btn btn-primary" onclick="submitQuotation()">Submit Request for Quote</button>
+                </div>
+            </div>
+
+            <div id="empty-state" class="empty-cart" style="display: none;">
+                <i class="fa-solid fa-cart-shopping" style="font-size: 3rem; margin-bottom: 1rem; color: #ddd;"></i>
+                <h3>Your quotation cart is empty</h3>
+                <p>Browse products and add them to your list.</p>
+                <a href="../products.html" class="btn btn-primary" style="margin-top: 1.5rem;">Browse Products</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Wood Hub</h3>
+                    <p style="color: #aaa; line-height: 1.6;">Your one-stop destination for premium wood, custom
+                        furniture, and precision CNC works.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../products.html">Products</a></li>
+                        <li><a href="../gallery.html">Gallery</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fa-solid fa-phone" style="margin-right: 10px;"></i> +91 98765
+                                43210</a></li>
+                        <li><a href="#"><i class="fa-solid fa-envelope" style="margin-right: 10px;"></i>
+                                info@woodhub.com</a></li>
+                        <li><a href="#"><i class="fa-solid fa-map-location-dot" style="margin-right: 10px;"></i>
+                                Industrial Area, City Name</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2024 Wood Hub. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', renderCart);
+
+        function renderCart() {
+            const cart = JSON.parse(localStorage.getItem('woodhub_cart')) || [];
+            const tbody = document.getElementById('cart-body');
+            const cartContent = document.getElementById('cart-content');
+            const emptyState = document.getElementById('empty-state');
+
+            if (cart.length === 0) {
+                cartContent.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            cartContent.style.display = 'block';
+            emptyState.style.display = 'none';
+            tbody.innerHTML = '';
+
+            cart.forEach((item, index) => {
+                let detailsStr = '';
+                // Handle different detail structures from different pages
+                if (item.type === 'Hardware') {
+                    detailsStr = `Name: <b>${item.details.name}</b><br>Spec: ${item.details.spec}`;
+                } else {
+                    // Generic form data dump
+                    for (const [key, val] of Object.entries(item.details)) {
+                        if (key && val) detailsStr += `<span style="text-transform: capitalize;">${key}:</span> <b>${val}</b><br>`;
+                    }
+                }
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight: 500; text-transform: capitalize;">${item.type || 'Custom Item'}</td>
+                    <td style="font-size: 0.95rem; line-height: 1.6;">${detailsStr}</td>
+                    <td>
+                        <button style="color: red; opacity: 0.7;" onclick="removeItem(${index})"><i class="fa-solid fa-trash"></i> Remove</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function removeItem(index) {
+            const cart = JSON.parse(localStorage.getItem('woodhub_cart')) || [];
+            cart.splice(index, 1);
+            localStorage.setItem('woodhub_cart', JSON.stringify(cart));
+            renderCart();
+            updateCartCount(); // from main.js if available/reloaded
+            // manual update helper since main.js might not catch the local change immediately without event
+            const count = document.querySelector('.cart-count');
+            if (count) count.textContent = cart.length;
+        }
+
+        function submitQuotation() {
+            const cart = JSON.parse(localStorage.getItem('woodhub_cart')) || [];
+            if (cart.length === 0) return;
+
+            // Mock API Call failure/success
+            // Show Success
+            document.getElementById('cart-content').style.display = 'none';
+            document.getElementById('success-message').style.display = 'block';
+
+            // Clear cart
+            localStorage.removeItem('woodhub_cart');
+            const count = document.querySelector('.cart-count');
+            if (count) count.textContent = 0;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Products - Wood Hub</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="nav-brand">Wood Hub</a>
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="products.html" class="nav-link active" style="color: var(--color-primary);">Products</a></li>
+            <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+            <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+            <div class="nav-icon user-icon"><i class="fa-solid fa-user"></i></div>
+            <div class="nav-icon" onclick="window.location.href='pages/quotation.html'">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="cart-count">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Modal Placeholder (Should be a shared include ideally or duplicated in static sites) -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 class="text-center" style="margin-bottom: 1.5rem;">Welcome Back</h2>
+            <form id="login-form">
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Phone Number</label>
+                    <input type="tel" placeholder="Enter your mobile number"
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Login to Continue</button>
+            </form>
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="container">
+            <h1 class="text-center" style="margin-bottom: 3rem;">Explore Our Categories</h1>
+            <div class="preview-grid">
+                <!-- Wood -->
+                <article class="card" onclick="window.location.href='pages/wood.html'">
+                    <div class="card-image-container"><img src="assets/images/product/main/wood.jpg" alt="Wood"
+                            class="card-image">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Wood</h3>
+                        <p class="card-description">Quality timber for structural and aesthetic use.</p>
+                    </div>
+                </article>
+
+                <!-- Furniture -->
+                <article class="card" onclick="window.location.href='pages/furniture.html'">
+                    <div class="card-image-container"><img src="assets/images/product/main/furniture.jpg"
+                            alt="Furniture" class="card-image"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">Furniture</h3>
+                        <p class="card-description">Custom made furniture for every corner of your home.</p>
+                    </div>
+                </article>
+
+                <!-- Hardware -->
+                <article class="card" onclick="window.location.href='pages/hardware.html'">
+                    <div class="card-image-container"><img src="assets/images/product/main/hardware.jpg" alt="Hardware"
+                            class="card-image"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">Hardware</h3>
+                        <p class="card-description">Fittings, locks, and accessories.</p>
+                    </div>
+                </article>
+
+                <!-- CNC -->
+                <article class="card" onclick="window.location.href='pages/cnc.html'">
+                    <div class="card-image-container"><img src="assets/images/product/main/cnc.jpg" alt="CNC"
+                            class="card-image"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">CNC Carving</h3>
+                        <p class="card-description">Intricate designs on wood and metal.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Wood Hub</h3>
+                    <p style="color: #aaa; line-height: 1.6;">Your one-stop destination for premium wood, custom
+                        furniture, and precision CNC works.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fa-solid fa-phone" style="margin-right: 10px;"></i> +91 98765
+                                43210</a></li>
+                        <li><a href="#"><i class="fa-solid fa-envelope" style="margin-right: 10px;"></i>
+                                info@woodhub.com</a></li>
+                        <li><a href="#"><i class="fa-solid fa-map-location-dot" style="margin-right: 10px;"></i>
+                                Industrial Area, City Name</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2024 Wood Hub. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Actions -->
+    <div class="floating-actions">
+        <a href="https://wa.me/919876543210" target="_blank" class="float-btn btn-whatsapp"><i
+                class="fa-brands fa-whatsapp"></i></a>
+        <a href="tel:+919876543210" class="float-btn btn-call"><i class="fa-solid fa-phone"></i></a>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

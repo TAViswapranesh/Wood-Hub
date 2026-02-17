@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Furniture Details - Wood Hub</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .detail-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            padding: 4rem 0;
+            align-items: start;
+        }
+
+        @media(max-width: 768px) {
+            .detail-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--color-text-main);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-body);
+        }
+
+        .file-upload {
+            border: 2px dashed #ddd;
+            padding: 2rem;
+            text-align: center;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        .file-upload:hover {
+            border-color: var(--color-primary);
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="../index.html" class="nav-brand">Wood Hub</a>
+        <ul class="nav-links">
+            <li><a href="../index.html" class="nav-link">Home</a></li>
+            <li><a href="../products.html" class="nav-link active">Products</a></li>
+            <li><a href="../gallery.html" class="nav-link">Gallery</a></li>
+            <li><a href="../contact.html" class="nav-link">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+            <div class="nav-icon user-icon"><i class="fa-solid fa-user"></i></div>
+            <div class="nav-icon" onclick="window.location.href='quotation.html'">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="cart-count">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 class="text-center" style="margin-bottom: 1.5rem;">One-Time Login</h2>
+            <form id="login-form-modal">
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Phone Number</label>
+                    <input type="tel" id="user-phone" placeholder="Enter your mobile number" required
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Verify & Continue</button>
+            </form>
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="container">
+            <a href="furniture.html"
+                style="color: var(--color-text-light); display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 2rem;">
+                <i class="fa-solid fa-arrow-left"></i> Back to Furniture
+            </a>
+
+            <div class="detail-container">
+                <div>
+                    <img id="product-image" src="../assets/cat-furniture.svg" alt="Product"
+                        style="width: 100%; border-radius: var(--radius-lg); margin-bottom: 2rem; box-shadow: var(--shadow-sm);">
+                </div>
+
+                <div>
+                    <h1 id="product-title" style="margin-bottom: 2rem;">Product Name</h1>
+
+                    <form id="quotation-form">
+                        <div class="form-group">
+                            <label>Length</label>
+                            <input type="text" name="length" placeholder="e.g. 7 ft" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Width</label>
+                            <input type="text" name="width" placeholder="e.g. 3 ft" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Height</label>
+                            <input type="text" name="height" placeholder="e.g. 1.5 ft" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Quantity</label>
+                            <input type="number" name="quantity" value="1" min="1" required>
+                        </div>
+
+                        <div style="background: #f9f9f9; padding: 1.5rem; border-radius: var(--radius-md);">
+                            <h4 style="margin-bottom: 1rem;">Reference Image?</h4>
+                            <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">Upload a design or sketch
+                                for
+                                better clarity.</p>
+                            <div class="file-upload">
+                                <i class="fa-solid fa-cloud-arrow-up"
+                                    style="font-size: 2rem; color: #ccc; margin-bottom: 0.5rem;"></i>
+                                <p>Click to Upload Image</p>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                            Add to Quotation <i class="fa-solid fa-plus" style="margin-left: 0.5rem;"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Wood Hub</h3>
+                    <p style="color: #aaa; line-height: 1.6;">Your one-stop destination for premium wood, custom
+                        furniture, and precision CNC works.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../products.html">Products</a></li>
+                        <li><a href="../gallery.html">Gallery</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fa-solid fa-phone" style="margin-right: 10px;"></i> +91 98765
+                                43210</a></li>
+                        <li><a href="#"><i class="fa-solid fa-envelope" style="margin-right: 10px;"></i>
+                                info@woodhub.com</a></li>
+                        <li><a href="#"><i class="fa-solid fa-map-location-dot" style="margin-right: 10px;"></i>
+                                Industrial Area, City Name</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2024 Wood Hub. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <div class="floating-actions">
+        <a href="https://wa.me/919876543210" target="_blank" class="float-btn btn-whatsapp"><i
+                class="fa-brands fa-whatsapp"></i></a>
+        <a href="tel:+919876543210" class="float-btn btn-call"><i class="fa-solid fa-phone"></i></a>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/products.js"></script>
+    <script>
+        document.getElementById('login-form-modal').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const phone = document.getElementById('user-phone').value;
+            if (phone) {
+                localStorage.setItem('woodhub_user', phone);
+                document.getElementById('login-modal').classList.remove('active');
+                alert('Login Successful! You can now add items.');
+            }
+        });
+    </script>
+</body>
+
+</html>
