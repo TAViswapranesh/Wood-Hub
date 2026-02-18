@@ -154,76 +154,8 @@
         </div>
     </footer>
 
-    <script src="../js/main.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', renderCart);
-
-        function renderCart() {
-            const cart = JSON.parse(localStorage.getItem('woodhub_cart')) || [];
-            const tbody = document.getElementById('cart-body');
-            const cartContent = document.getElementById('cart-content');
-            const emptyState = document.getElementById('empty-state');
-
-            if (cart.length === 0) {
-                cartContent.style.display = 'none';
-                emptyState.style.display = 'block';
-                return;
-            }
-
-            cartContent.style.display = 'block';
-            emptyState.style.display = 'none';
-            tbody.innerHTML = '';
-
-            cart.forEach((item, index) => {
-                let detailsStr = '';
-                // Handle different detail structures from different pages
-                if (item.type === 'Hardware') {
-                    detailsStr = `Name: <b>${item.details.name}</b><br>Spec: ${item.details.spec}`;
-                } else {
-                    // Generic form data dump
-                    for (const [key, val] of Object.entries(item.details)) {
-                        if (key && val) detailsStr += `<span style="text-transform: capitalize;">${key}:</span> <b>${val}</b><br>`;
-                    }
-                }
-
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td style="font-weight: 500; text-transform: capitalize;">${item.type || 'Custom Item'}</td>
-                    <td style="font-size: 0.95rem; line-height: 1.6;">${detailsStr}</td>
-                    <td>
-                        <button style="color: red; opacity: 0.7;" onclick="removeItem(${index})"><i class="fa-solid fa-trash"></i> Remove</button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function removeItem(index) {
-            const cart = JSON.parse(localStorage.getItem('woodhub_cart')) || [];
-            cart.splice(index, 1);
-            localStorage.setItem('woodhub_cart', JSON.stringify(cart));
-            renderCart();
-            updateCartCount(); // from main.js if available/reloaded
-            // manual update helper since main.js might not catch the local change immediately without event
-            const count = document.querySelector('.cart-count');
-            if (count) count.textContent = cart.length;
-        }
-
-        function submitQuotation() {
-            const cart = JSON.parse(localStorage.getItem('woodhub_cart')) || [];
-            if (cart.length === 0) return;
-
-            // Mock API Call failure/success
-            // Show Success
-            document.getElementById('cart-content').style.display = 'none';
-            document.getElementById('success-message').style.display = 'block';
-
-            // Clear cart
-            localStorage.removeItem('woodhub_cart');
-            const count = document.querySelector('.cart-count');
-            if (count) count.textContent = 0;
-        }
-    </script>
+    <script type="module" src="../../js/main.js"></script>
+    <script type="module" src="../../js/quotation.js"></script>
 </body>
 
 </html>

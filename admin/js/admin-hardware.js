@@ -1,6 +1,7 @@
 /* ===================================
    ADMIN HARDWARE MANAGEMENT MODULE
    =================================== */
+import storageService from '../../js/services/storageService.js';
 
 const HARDWARE_STORAGE_KEY = 'woodhub_admin_hardware';
 
@@ -15,20 +16,19 @@ const HARDWARE_CATEGORIES = [
 ];
 
 /**
- * Get all hardware items from localStorage
+ * Get all hardware items from storage
  * @returns {Array}
  */
 function getAllHardware() {
-    const data = localStorage.getItem(HARDWARE_STORAGE_KEY);
-    return data ? JSON.parse(data) : [];
+    return storageService.get(HARDWARE_STORAGE_KEY) || [];
 }
 
 /**
- * Save hardware items to localStorage
+ * Save hardware items to storage
  * @param {Array} items 
  */
 function saveHardware(items) {
-    localStorage.setItem(HARDWARE_STORAGE_KEY, JSON.stringify(items));
+    storageService.set(HARDWARE_STORAGE_KEY, items);
 }
 
 /**
@@ -166,10 +166,10 @@ function renderHardwareList() {
                         <td>${item.color || '-'}</td>
                         <td>${new Date(item.dateAdded).toLocaleDateString()}</td>
                         <td>
-                            <button class="btn btn-sm btn-secondary" onclick="editHardware(${item.id})">
+                            <button class="btn btn-sm btn-secondary" onclick="window.editHardware(${item.id})">
                                 <i class="fas fa-edit"></i>
                             </button>
-                            <button class="btn btn-sm btn-danger" onclick="confirmDeleteHardware(${item.id})">
+                            <button class="btn btn-sm btn-danger" onclick="window.confirmDeleteHardware(${item.id})">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </td>
@@ -272,14 +272,9 @@ function confirmDeleteHardware(id) {
  * Initialize hardware page
  */
 function initHardwarePage() {
-    // Protect route
-    protectRoute();
-
-    // Set active navigation
-    setActiveNav('hardware.html');
-
-    // Display user info
-    displayUserInfo();
+    if (window.protectRoute) window.protectRoute();
+    if (window.setActiveNav) window.setActiveNav('hardware.html');
+    if (window.displayUserInfo) window.displayUserInfo();
 
     // Populate category dropdown
     const categorySelect = document.getElementById('category');
@@ -306,13 +301,17 @@ function initHardwarePage() {
 
     // Setup logout button
     const logoutBtn = document.getElementById('logout-btn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', handleLogout);
+    if (logoutBtn && window.handleLogout) {
+        logoutBtn.addEventListener('click', window.handleLogout);
     }
 
     // Render hardware list
     renderHardwareList();
 }
+
+// Expose to window
+window.editHardware = editHardware;
+window.confirmDeleteHardware = confirmDeleteHardware;
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', initHardwarePage);

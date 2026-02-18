@@ -1,6 +1,7 @@
 /* ===================================
    ADMIN AUTHENTICATION MODULE
    =================================== */
+import storageService from '../../js/services/storageService.js';
 
 // Mock credentials (replace with backend authentication in production)
 const ADMIN_CREDENTIALS = {
@@ -32,7 +33,7 @@ function createSession(username) {
         loginTime: new Date().toISOString(),
         isAuthenticated: true
     };
-    localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+    storageService.set(SESSION_KEY, session);
 }
 
 /**
@@ -40,15 +41,8 @@ function createSession(username) {
  * @returns {boolean}
  */
 function isAuthenticated() {
-    const session = localStorage.getItem(SESSION_KEY);
-    if (!session) return false;
-
-    try {
-        const sessionData = JSON.parse(session);
-        return sessionData.isAuthenticated === true;
-    } catch (e) {
-        return false;
-    }
+    const session = storageService.get(SESSION_KEY);
+    return session && session.isAuthenticated === true;
 }
 
 /**
@@ -56,21 +50,14 @@ function isAuthenticated() {
  * @returns {object|null}
  */
 function getSession() {
-    const session = localStorage.getItem(SESSION_KEY);
-    if (!session) return null;
-
-    try {
-        return JSON.parse(session);
-    } catch (e) {
-        return null;
-    }
+    return storageService.get(SESSION_KEY);
 }
 
 /**
  * Destroy admin session (logout)
  */
 function destroySession() {
-    localStorage.removeItem(SESSION_KEY);
+    storageService.remove(SESSION_KEY);
 }
 
 /**
@@ -164,4 +151,16 @@ function displayUserInfo() {
             el.textContent = session.username;
         });
     }
+}
+
+// Export functions for use in other modules
+window.protectRoute = protectRoute;
+window.setActiveNav = setActiveNav;
+window.displayUserInfo = displayUserInfo;
+window.handleLogout = handleLogout;
+window.initLoginPage = initLoginPage;
+
+// Auto-initialize if on login page
+if (document.getElementById('login-form')) {
+    initLoginPage();
 }

@@ -1,24 +1,24 @@
 /* ===================================
    ADMIN GALLERY MANAGEMENT MODULE
    =================================== */
+import storageService from '../../js/services/storageService.js';
 
 const GALLERY_STORAGE_KEY = 'woodhub_admin_gallery';
 
 /**
- * Get all gallery images from localStorage
+ * Get all gallery images from storage
  * @returns {Array}
  */
 function getAllGalleryImages() {
-    const data = localStorage.getItem(GALLERY_STORAGE_KEY);
-    return data ? JSON.parse(data) : [];
+    return storageService.get(GALLERY_STORAGE_KEY) || [];
 }
 
 /**
- * Save gallery images to localStorage
+ * Save gallery images to storage
  * @param {Array} images 
  */
 function saveGalleryImages(images) {
-    localStorage.setItem(GALLERY_STORAGE_KEY, JSON.stringify(images));
+    storageService.set(GALLERY_STORAGE_KEY, images);
 }
 
 /**
@@ -108,7 +108,7 @@ function renderGalleryGrid() {
         <div class="gallery-item">
             <img src="${img.image}" alt="${img.name}">
             <div class="gallery-item-actions">
-                <button class="btn btn-sm btn-danger" onclick="confirmDeleteGalleryImage(${img.id})">
+                <button class="btn btn-sm btn-danger" onclick="window.confirmDeleteGalleryImage(${img.id})">
                     <i class="fas fa-trash"></i>
                 </button>
             </div>
@@ -138,14 +138,9 @@ function confirmDeleteGalleryImage(id) {
  * Initialize gallery page
  */
 function initGalleryPage() {
-    // Protect route
-    protectRoute();
-
-    // Set active navigation
-    setActiveNav('gallery.html');
-
-    // Display user info
-    displayUserInfo();
+    if (window.protectRoute) window.protectRoute();
+    if (window.setActiveNav) window.setActiveNav('gallery.html');
+    if (window.displayUserInfo) window.displayUserInfo();
 
     // Setup image upload
     const imageInput = document.getElementById('gallery-upload');
@@ -155,13 +150,16 @@ function initGalleryPage() {
 
     // Setup logout button
     const logoutBtn = document.getElementById('logout-btn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', handleLogout);
+    if (logoutBtn && window.handleLogout) {
+        logoutBtn.addEventListener('click', window.handleLogout);
     }
 
     // Render gallery grid
     renderGalleryGrid();
 }
+
+// Expose to window
+window.confirmDeleteGalleryImage = confirmDeleteGalleryImage;
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', initGalleryPage);

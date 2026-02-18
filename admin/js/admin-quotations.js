@@ -1,16 +1,15 @@
 /* ===================================
    ADMIN QUOTATIONS VIEWER MODULE
    =================================== */
-
-const QUOTATIONS_STORAGE_KEY = 'woodhub_cart';
+import orderService from '../../js/services/orderService.js';
 
 /**
- * Get all quotation requests from customer site
+ * Get all quotation requests
  * @returns {Array}
  */
 function getAllQuotations() {
-    const data = localStorage.getItem(QUOTATIONS_STORAGE_KEY);
-    return data ? JSON.parse(data) : [];
+    // Ensure we fetch latest orders
+    return orderService.getAllOrders();
 }
 
 /**
@@ -19,6 +18,7 @@ function getAllQuotations() {
  * @returns {string}
  */
 function formatQuotationType(type) {
+    if (!type) return 'Unknown';
     return type.split('-').map(word =>
         word.charAt(0).toUpperCase() + word.slice(1)
     ).join(' ');
@@ -46,33 +46,39 @@ function renderQuotationsTable() {
         return;
     }
 
+    // Sort by date descending (newest first)
+    quotations.sort((a, b) => new Date(b.date) - new Date(a.date));
+
     const tableHTML = `
         <table class="admin-table">
             <thead>
                 <tr>
-                    <th>#</th>
-                    <th>Product Type</th>
-                    <th>Details</th>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Items</th>
                     <th>Date Submitted</th>
+                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                ${quotations.map((quote, index) => `
+                ${quotations.map((quote) => `
                     <tr>
-                        <td><strong>${index + 1}</strong></td>
+                        <td><strong>${quote.id}</strong></td>
                         <td>
-                            <span class="badge badge-primary">${formatQuotationType(quote.type)}</span>
+                            ${quote.customer ? quote.customer.name : 'Guest'}<br>
+                            <small>${quote.customer ? quote.customer.phone : ''}</small>
                         </td>
                         <td>
-                            <button class="btn btn-sm btn-outline" onclick="viewQuotationDetails(${quote.id})">
-                                <i class="fas fa-eye"></i> View Details
-                            </button>
+                            <span class="badge badge-primary">${quote.items.length} Items</span>
                         </td>
-                        <td>${new Date(quote.id).toLocaleString()}</td>
+                        <td>${new Date(quote.date).toLocaleString()}</td>
+                         <td>
+                            <span class="badge badge-secondary">${quote.status || 'Pending'}</span>
+                        </td>
                         <td>
-                            <button class="btn btn-sm btn-success" onclick="contactCustomer(${quote.id})">
-                                <i class="fas fa-phone"></i> Contact
+                            <button class="btn btn-sm btn-outline" onclick="window.viewQuotationDetails('${quote.id}')">
+                                <i class="fas fa-eye"></i> Details
                             </button>
                         </td>
                     </tr>
@@ -86,7 +92,7 @@ function renderQuotationsTable() {
 
 /**
  * View quotation details in modal
- * @param {number} id 
+ * @param {string} id 
  */
 function viewQuotationDetails(id) {
     const quotations = getAllQuotations();
@@ -103,53 +109,71 @@ function viewQuotationDetails(id) {
     let detailsHTML = `
         <div style="margin-bottom: var(--admin-space-lg);">
             <h3 style="color: var(--admin-primary); margin-bottom: var(--admin-space-md);">
-                ${formatQuotationType(quote.type)}
+                Order #${quote.id}
             </h3>
             <p style="color: var(--admin-text-tertiary); font-size: var(--admin-font-sm);">
-                Submitted: ${new Date(quote.id).toLocaleString()}
+                Submitted: ${new Date(quote.date).toLocaleString()}
+            </p>
+             <p style="color: var(--admin-text-primary); margin-top: 0.5rem;">
+                <strong>Status:</strong> ${quote.status}
             </p>
         </div>
+
+        <h4 style="margin-bottom: 1rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem;">Customer Details</h4>
+        <div class="admin-grid admin-grid-2" style="gap: var(--admin-space-md); margin-bottom: 2rem;">
+            <div><strong>Name:</strong> ${quote.customer?.name || 'N/A'}</div>
+            <div><strong>Phone:</strong> ${quote.customer?.phone || 'N/A'}</div>
+            <div><strong>Email:</strong> ${quote.customer?.email || 'N/A'}</div>
+        </div>
         
-        <div class="admin-grid admin-grid-2" style="gap: var(--admin-space-md);">
+        <h4 style="margin-bottom: 1rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem;">Order Items</h4>
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
     `;
 
-    // Display all details
-    for (const [key, value] of Object.entries(quote.details)) {
-        const label = key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1');
+    // Display items
+    quote.items.forEach((item, index) => {
+        let itemDetails = '';
+        for (const [key, val] of Object.entries(item.details)) {
+            if (key && val) itemDetails += `<div><span style="text-transform: capitalize; color: #666;">${key}:</span> <b>${val}</b></div>`;
+        }
+
         detailsHTML += `
-            <div>
-                <strong style="color: var(--admin-text-secondary); display: block; margin-bottom: var(--admin-space-xs);">
-                    ${label}:
-                </strong>
-                <span style="color: var(--admin-text-primary);">${value || 'N/A'}</span>
+            <div style="padding: 1rem; background: #f9f9f9; border-radius: 8px;">
+                <div style="font-weight: bold; margin-bottom: 0.5rem;">${index + 1}. ${formatQuotationType(item.type)}</div>
+                <div style="font-size: 0.9rem;">${itemDetails}</div>
             </div>
         `;
-    }
+    });
 
     detailsHTML += `</div>`;
+
+    // Add Status Update Actions
+    detailsHTML += `
+        <div style="margin-top: 2rem; border-top: 1px solid #eee; padding-top: 1rem;">
+             <h4 style="margin-bottom: 1rem;">Actions</h4>
+             <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-success" onclick="window.updateStatus('${quote.id}', 'Approved')">Approve</button>
+                <button class="btn btn-danger" onclick="window.updateStatus('${quote.id}', 'Rejected')">Reject</button>
+                <button class="btn btn-primary" onclick="window.updateStatus('${quote.id}', 'Completed')">Mark Completed</button>
+             </div>
+        </div>
+    `;
 
     modalBody.innerHTML = detailsHTML;
     modal.classList.add('active');
 }
 
 /**
- * Contact customer (placeholder)
- * @param {number} id 
+ * Update Order Status
+ * @param {string} id 
+ * @param {string} status 
  */
-function contactCustomer(id) {
-    const quotations = getAllQuotations();
-    const quote = quotations.find(q => q.id === id);
-
-    if (!quote) return;
-
-    const phone = quote.details.phone || quote.details.contact;
-
-    if (phone) {
-        const message = `Hello! This is regarding your quotation request for ${formatQuotationType(quote.type)}.`;
-        const whatsappUrl = `https://wa.me/${phone.replace(/\D/g, '')}?text=${encodeURIComponent(message)}`;
-        window.open(whatsappUrl, '_blank');
-    } else {
-        alert('No contact information available for this quotation.');
+function updateStatus(id, status) {
+    if (confirm(`Are you sure you want to mark this order as ${status}?`)) {
+        orderService.updateOrderStatus(id, status);
+        closeQuotationModal();
+        renderQuotationsTable();
+        alert(`Order ${status} successfully!`);
     }
 }
 
@@ -167,19 +191,14 @@ function closeQuotationModal() {
  * Initialize quotations page
  */
 function initQuotationsPage() {
-    // Protect route
-    protectRoute();
-
-    // Set active navigation
-    setActiveNav('quotations.html');
-
-    // Display user info
-    displayUserInfo();
+    if (window.protectRoute) window.protectRoute();
+    if (window.setActiveNav) window.setActiveNav('quotations.html');
+    if (window.displayUserInfo) window.displayUserInfo();
 
     // Setup logout button
     const logoutBtn = document.getElementById('logout-btn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', handleLogout);
+    if (logoutBtn && window.handleLogout) {
+        logoutBtn.addEventListener('click', window.handleLogout);
     }
 
     // Setup modal close
@@ -200,6 +219,10 @@ function initQuotationsPage() {
     // Render quotations table
     renderQuotationsTable();
 }
+
+// Expose functions to window for onclick handlers
+window.viewQuotationDetails = viewQuotationDetails;
+window.updateStatus = updateStatus;
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', initQuotationsPage);

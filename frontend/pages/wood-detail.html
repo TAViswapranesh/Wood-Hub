@@ -96,7 +96,7 @@
             <h2 class="text-center" style="margin-bottom: 1.5rem;">One-Time Login</h2>
             <p class="text-center" style="margin-bottom: 1.5rem; font-size: 0.9rem; color: #666;">Please verify your
                 phone number to add items to quotation.</p>
-            <form id="login-form-modal">
+            <form id="login-form">
                 <div style="margin-bottom: 1rem;">
                     <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Phone Number</label>
                     <input type="tel" id="user-phone" placeholder="Enter your mobile number" required
@@ -224,20 +224,8 @@
         <a href="tel:+919876543210" class="float-btn btn-call"><i class="fa-solid fa-phone"></i></a>
     </div>
 
-    <script src="../js/main.js"></script>
-    <script src="../js/products.js"></script>
-    <script>
-        // Inline simple logic for modal submission specific to this flow if needed, or rely on products.js
-        document.getElementById('login-form-modal').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const phone = document.getElementById('user-phone').value;
-            if (phone) {
-                localStorage.setItem('woodhub_user', phone);
-                document.getElementById('login-modal').classList.remove('active');
-                alert('Login Successful! You can now add items.');
-            }
-        });
-    </script>
+    <script type="module" src="../../js/main.js"></script>
+    <script type="module" src="../../js/products.js"></script>
 </body>
 
 </html>

@@ -1,9 +1,14 @@
+import storageService from '../../js/services/storageService.js';
+
 document.addEventListener('DOMContentLoaded', () => {
+    // Window helpers need to be defined before loading if they are used inline
+    // But this module runs on load.
+    // However, if the HTML has onclick="viewMessage(...)" we need to expose these.
     loadMessages();
 });
 
 function loadMessages() {
-    const messages = JSON.parse(localStorage.getItem('woodhub_messages')) || [];
+    const messages = storageService.get('woodhub_messages') || [];
     const messagesTableBody = document.getElementById('messages-table-body');
     const messageCount = document.getElementById('message-count');
 
@@ -19,7 +24,7 @@ function loadMessages() {
             return;
         }
 
-        // Sort by date (newest first) - assuming date string is comparable or use ID which is timestamp
+        // Sort by date (newest first)
         messages.sort((a, b) => b.id - a.id);
 
         messages.forEach(msg => {
@@ -30,8 +35,8 @@ function loadMessages() {
                 <td>${msg.mobile}</td>
                 <td>${msg.email}</td>
                 <td>
-                    <button class="btn btn-sm btn-info" onclick="viewMessage(${msg.id})">View</button>
-                    <button class="btn btn-sm btn-danger" onclick="deleteMessage(${msg.id})">Delete</button>
+                    <button class="btn btn-sm btn-info" onclick="window.viewMessage(${msg.id})">View</button>
+                    <button class="btn btn-sm btn-danger" onclick="window.deleteMessage(${msg.id})">Delete</button>
                 </td>
             `;
             messagesTableBody.appendChild(row);
@@ -40,7 +45,7 @@ function loadMessages() {
 }
 
 function viewMessage(id) {
-    const messages = JSON.parse(localStorage.getItem('woodhub_messages')) || [];
+    const messages = storageService.get('woodhub_messages') || [];
     const msg = messages.find(m => m.id === id);
 
     if (msg) {
@@ -50,9 +55,32 @@ function viewMessage(id) {
 
 function deleteMessage(id) {
     if (confirm('Are you sure you want to delete this message?')) {
-        let messages = JSON.parse(localStorage.getItem('woodhub_messages')) || [];
+        let messages = storageService.get('woodhub_messages') || [];
         messages = messages.filter(m => m.id !== id);
-        localStorage.setItem('woodhub_messages', JSON.stringify(messages));
+        storageService.set('woodhub_messages', messages);
         loadMessages();
     }
 }
+
+// Ensure the common admin layout init helpers are called if available
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAdminPage);
+} else {
+    initAdminPage();
+}
+
+function initAdminPage() {
+    if (window.protectRoute) window.protectRoute();
+    if (window.setActiveNav) window.setActiveNav('messages.html');
+    if (window.displayUserInfo) window.displayUserInfo();
+
+    // Setup logout button
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn && window.handleLogout) {
+        logoutBtn.addEventListener('click', window.handleLogout);
+    }
+}
+
+// Expose to window for onclick handlers
+window.viewMessage = viewMessage;
+window.deleteMessage = deleteMessage;

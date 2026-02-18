@@ -1,14 +1,16 @@
 /* ===================================
    ADMIN DASHBOARD MODULE
    =================================== */
+import orderService from '../../js/services/orderService.js';
+import storageService from '../../js/services/storageService.js';
 
 /**
  * Get total count of quotation requests
  * @returns {number}
  */
 function getQuotationCount() {
-    const cart = JSON.parse(localStorage.getItem('woodhub_cart')) || [];
-    return cart.length;
+    const orders = orderService.getAllOrders();
+    return orders.length;
 }
 
 /**
@@ -16,7 +18,7 @@ function getQuotationCount() {
  * @returns {number}
  */
 function getHardwareCount() {
-    const hardware = JSON.parse(localStorage.getItem('woodhub_admin_hardware')) || [];
+    const hardware = storageService.get('woodhub_admin_hardware') || [];
     return hardware.length;
 }
 
@@ -25,7 +27,7 @@ function getHardwareCount() {
  * @returns {number}
  */
 function getGalleryCount() {
-    const gallery = JSON.parse(localStorage.getItem('woodhub_admin_gallery')) || [];
+    const gallery = storageService.get('woodhub_admin_gallery') || [];
     return gallery.length;
 }
 
@@ -56,22 +58,22 @@ function updateDashboardStats() {
  * Initialize dashboard
  */
 function initDashboard() {
-    // Protect route
-    protectRoute();
+    // Note: protectRoute, setActiveNav, displayUserInfo, handleLogout are guaranteed 
+    // to be available globally because admin-auth.js exposes them to window.
+    // However, if we transition to pure modules, we should import them.
+    // For now, assuming they are loaded in the HTML via script tags.
 
-    // Set active navigation
-    setActiveNav('dashboard.html');
-
-    // Display user info
-    displayUserInfo();
+    if (window.protectRoute) window.protectRoute();
+    if (window.setActiveNav) window.setActiveNav('dashboard.html');
+    if (window.displayUserInfo) window.displayUserInfo();
 
     // Update statistics
     updateDashboardStats();
 
     // Setup logout button
     const logoutBtn = document.getElementById('logout-btn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', handleLogout);
+    if (logoutBtn && window.handleLogout) {
+        logoutBtn.addEventListener('click', window.handleLogout);
     }
 }
 

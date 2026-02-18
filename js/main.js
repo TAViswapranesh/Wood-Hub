@@ -1,22 +1,31 @@
+import storageService from './services/storageService.js';
+
 document.addEventListener('DOMContentLoaded', () => {
-    // Mobile Menu Toggle
+    initMobileMenu();
+    initLoginModal();
+    updateCartCount();
+
+    // Check if on login page or if we need to auto-logout/check session
+});
+
+/**
+ * Mobile Menu Toggle
+ */
+function initMobileMenu() {
     const navbar = document.querySelector('.navbar');
     const navLinks = document.querySelector('.nav-links');
 
     if (navbar && navLinks) {
-        // Create Toggle Button dynamically
+        // Check if toggle already exists (in case of re-run)
+        if (navbar.querySelector('.menu-toggle')) return;
+
         const toggleBtn = document.createElement('div');
         toggleBtn.className = 'menu-toggle';
         toggleBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
-
-        // Append to navbar
         navbar.appendChild(toggleBtn);
 
-        // Toggle Event
         toggleBtn.addEventListener('click', () => {
             navLinks.classList.toggle('active');
-
-            // Toggle Icon
             const icon = toggleBtn.querySelector('i');
             if (navLinks.classList.contains('active')) {
                 icon.classList.remove('fa-bars');
@@ -27,22 +36,30 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+}
 
-    // Login Modal Logic
+/**
+ * Login Modal Logic
+ */
+function initLoginModal() {
     const loginBtn = document.querySelector('.nav-icon.user-icon');
     const modal = document.getElementById('login-modal');
     const closeModal = document.querySelector('.close-modal');
+    const loginForm = document.getElementById('login-form');
 
-    // Make sure elements exist before adding listeners to avoid errors on pages without them (though they should be everywhere)
-    if (loginBtn && modal && closeModal) {
+    if (loginBtn && modal) {
         loginBtn.addEventListener('click', () => {
             modal.classList.add('active');
         });
+    }
 
+    if (closeModal && modal) {
         closeModal.addEventListener('click', () => {
             modal.classList.remove('active');
         });
+    }
 
+    if (modal) {
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 modal.classList.remove('active');
@@ -50,40 +67,45 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Cart Count Update (Mock)
-    updateCartCount();
-
-    // Login Form Submission
-    const loginForm = document.getElementById('login-form');
     if (loginForm) {
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const name = document.getElementById('login-name').value;
-            const mobile = document.getElementById('login-mobile').value;
+            // In a real app, strict validation would go here
+            const nameInput = loginForm.querySelector('input[type="text"]'); // Assuming name input added or phone only
+            const phoneInput = loginForm.querySelector('input[type="tel"]');
 
-            if (name && mobile) {
-                const user = { name, mobile };
-                localStorage.setItem('woodhub_user', JSON.stringify(user));
+            // Existing HTML only had phone input in some versions, but main.js referenced name & mobile.
+            // Let's adapt to simple phone login or what's in the HTML.
+            // HTML in previous view had: <input type="tel">
 
-                // Update UI (optional, closes modal for now)
-                const modal = document.getElementById('login-modal');
+            const mobile = phoneInput ? phoneInput.value : '';
+
+            if (mobile) {
+                const user = { mobile, name: "User" }; // Default name if not provided
+                storageService.set('woodhub_user', user);
+
                 if (modal) modal.classList.remove('active');
-
                 alert('Logged in successfully!');
 
-                // If on contact page, reload to trigger pre-fill or just call it if we exposed function
                 if (window.location.pathname.includes('contact.html')) {
                     window.location.reload();
                 }
             }
         });
     }
-});
+}
 
-function updateCartCount() {
-    const cart = JSON.parse(localStorage.getItem('woodhub_cart')) || [];
+/**
+ * Update Cart Badge Count
+ */
+export function updateCartCount() {
+    const cart = storageService.get('woodhub_cart') || [];
     const countElement = document.querySelector('.cart-count');
     if (countElement) {
         countElement.textContent = cart.length;
     }
 }
+
+// Expose to window for legacy inline calls if strictly necessary, 
+// but we aim to remove them.
+window.updateCartCount = updateCartCount; 

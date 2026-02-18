@@ -134,7 +134,7 @@
         <div class="modal-content">
             <span class="close-modal">&times;</span>
             <h2 class="text-center" style="margin-bottom: 1.5rem;">One-Time Login</h2>
-            <form id="login-form-modal">
+            <form id="login-form">
                 <div style="margin-bottom: 1rem;">
                     <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Phone Number</label>
                     <input type="tel" id="user-phone" placeholder="Enter your mobile number" required
@@ -186,8 +186,9 @@
                             <div class="hw-content">
                                 <div class="hw-title">Premium Door Handle</div>
                                 <div class="hw-meta">Size: 8 inch | Gold Finish</div>
-                                <button class="btn btn-outline" style="width: 100%; padding: 6px; font-size: 0.9rem;"
-                                    onclick="addToCart('Door Handle', '8 inch - Gold')">Add to Quote</button>
+                                <button class="btn btn-outline btn-add-cart"
+                                    style="width: 100%; padding: 6px; font-size: 0.9rem;" data-name="Door Handle"
+                                    data-spec="8 inch - Gold">Add to Quote</button>
                             </div>
                         </div>
 
@@ -197,8 +198,9 @@
                             <div class="hw-content">
                                 <div class="hw-title">Mortise Lock Set</div>
                                 <div class="hw-meta">Heavy Duty | SS Finish</div>
-                                <button class="btn btn-outline" style="width: 100%; padding: 6px; font-size: 0.9rem;"
-                                    onclick="addToCart('Mortise Lock', 'SS Finish')">Add to Quote</button>
+                                <button class="btn btn-outline btn-add-cart"
+                                    style="width: 100%; padding: 6px; font-size: 0.9rem;" data-name="Mortise Lock"
+                                    data-spec="SS Finish">Add to Quote</button>
                             </div>
                         </div>
 
@@ -208,8 +210,9 @@
                             <div class="hw-content">
                                 <div class="hw-title">Soft Close Hinge</div>
                                 <div class="hw-meta">110 Degree | Nickel</div>
-                                <button class="btn btn-outline" style="width: 100%; padding: 6px; font-size: 0.9rem;"
-                                    onclick="addToCart('Soft Close Hinge', 'Nickel')">Add to Quote</button>
+                                <button class="btn btn-outline btn-add-cart"
+                                    style="width: 100%; padding: 6px; font-size: 0.9rem;" data-name="Soft Close Hinge"
+                                    data-spec="Nickel">Add to Quote</button>
                             </div>
                         </div>
 
@@ -219,8 +222,9 @@
                             <div class="hw-content">
                                 <div class="hw-title">Wood Adhesive</div>
                                 <div class="hw-meta">5kg Bucket</div>
-                                <button class="btn btn-outline" style="width: 100%; padding: 6px; font-size: 0.9rem;"
-                                    onclick="addToCart('Wood Adhesive', '5kg')">Add to Quote</button>
+                                <button class="btn btn-outline btn-add-cart"
+                                    style="width: 100%; padding: 6px; font-size: 0.9rem;" data-name="Wood Adhesive"
+                                    data-spec="5kg">Add to Quote</button>
                             </div>
                         </div>
                     </div>
@@ -270,47 +274,8 @@
         <a href="tel:+919876543210" class="float-btn btn-call"><i class="fa-solid fa-phone"></i></a>
     </div>
 
-    <script src="../js/main.js"></script>
-    <script>
-        // Check login logic duplicated or shared
-        document.getElementById('login-form-modal').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const phone = document.getElementById('user-phone').value;
-            if (phone) {
-                localStorage.setItem('woodhub_user', phone);
-                document.getElementById('login-modal').classList.remove('active');
-                alert('Login Successful!');
-            }
-        });
-
-        function addToCart(name, spec) {
-            const isLoggedIn = localStorage.getItem('woodhub_user');
-            if (!isLoggedIn) {
-                document.getElementById('login-modal').classList.add('active');
-                return;
-            }
-
-            const item = {
-                id: Date.now(),
-                type: 'Hardware',
-                details: {
-                    name: name,
-                    spec: spec,
-                    quantity: 1
-                }
-            };
-
-            const cart = JSON.parse(localStorage.getItem('woodhub_cart')) || [];
-            cart.push(item);
-            localStorage.setItem('woodhub_cart', JSON.stringify(cart));
-
-            // Update badge (mock)
-            const count = document.querySelector('.cart-count');
-            if (count) count.textContent = cart.length;
-
-            alert('Added ' + name + ' to Quotation!');
-        }
-    </script>
+    <script type="module" src="../../js/main.js"></script>
+    <script type="module" src="../../js/hardware.js"></script>
 </body>
 
 </html>
