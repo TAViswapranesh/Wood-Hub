@@ -1,4 +1,4 @@
-import { galleryImages, getGalleryCategories } from './data/galleryData.js';
+import galleryService from './services/galleryService.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     initGallery();
@@ -13,7 +13,9 @@ function initGallery() {
     // Clear existing mock content
     galleryGrid.innerHTML = '';
 
-    galleryImages.forEach(img => {
+    const images = galleryService.getGalleryImages();
+
+    images.forEach(img => {
         const item = document.createElement('div');
         item.className = 'gallery-item';
 

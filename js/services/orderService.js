@@ -1,4 +1,5 @@
 import storageService from './storageService.js';
+import cartService from './cartService.js';
 
 /**
  * OrderService
@@ -36,7 +37,7 @@ class OrderService {
         storageService.set(this.STORAGE_KEY_ORDERS, orders);
 
         // Clear cart after successful submission
-        storageService.remove(this.STORAGE_KEY_CART);
+        cartService.clearCart();
 
         return newOrder;
     }
@@ -87,6 +88,26 @@ class OrderService {
         const orders = this.getAllOrders();
         // ample implementation
         return orders.filter(o => o.customerRes?.phone === identifier);
+    }
+
+    // --- Strict Storage Compliance Methods ---
+
+    // User Management
+    getUser() { return storageService.get('woodhub_user'); }
+    setUser(user) { storageService.set('woodhub_user', user); }
+
+    // Admin Session Management
+    getAdminSession() { return storageService.get('woodhub_admin_session'); }
+    setAdminSession(session) { storageService.set('woodhub_admin_session', session); }
+    clearAdminSession() { storageService.remove('woodhub_admin_session'); }
+
+    // Messages Management
+    getMessages() { return storageService.get('woodhub_messages') || []; }
+    saveMessages(msgs) { storageService.set('woodhub_messages', msgs); }
+    addMessage(msg) {
+        const msgs = this.getMessages();
+        msgs.push(msg);
+        this.saveMessages(msgs);
     }
 }
 

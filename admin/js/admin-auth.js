@@ -1,16 +1,13 @@
 /* ===================================
    ADMIN AUTHENTICATION MODULE
    =================================== */
-import storageService from '../../js/services/storageService.js';
+import orderService from '../../js/services/orderService.js';
 
 // Mock credentials (replace with backend authentication in production)
 const ADMIN_CREDENTIALS = {
     username: 'admin',
     password: 'admin123'
 };
-
-// Session key for localStorage
-const SESSION_KEY = 'woodhub_admin_session';
 
 /**
  * Validate login credentials
@@ -33,7 +30,7 @@ function createSession(username) {
         loginTime: new Date().toISOString(),
         isAuthenticated: true
     };
-    storageService.set(SESSION_KEY, session);
+    orderService.setAdminSession(session);
 }
 
 /**
@@ -41,7 +38,7 @@ function createSession(username) {
  * @returns {boolean}
  */
 function isAuthenticated() {
-    const session = storageService.get(SESSION_KEY);
+    const session = orderService.getAdminSession();
     return session && session.isAuthenticated === true;
 }
 
@@ -50,14 +47,14 @@ function isAuthenticated() {
  * @returns {object|null}
  */
 function getSession() {
-    return storageService.get(SESSION_KEY);
+    return orderService.getAdminSession();
 }
 
 /**
  * Destroy admin session (logout)
  */
 function destroySession() {
-    storageService.remove(SESSION_KEY);
+    orderService.clearAdminSession();
 }
 
 /**

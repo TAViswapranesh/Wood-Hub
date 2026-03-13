@@ -1,4 +1,4 @@
-import storageService from './services/storageService.js';
+import cartService from './services/cartService.js';
 import orderService from './services/orderService.js';
 import { updateCartCount } from './main.js';
 
@@ -28,7 +28,7 @@ function initCart() {
 }
 
 function renderCart() {
-    const cart = storageService.get('woodhub_cart') || [];
+    const cart = cartService.getCart();
     const tbody = document.getElementById('cart-body');
     const cartContent = document.getElementById('cart-content');
     const emptyState = document.getElementById('empty-state');
@@ -70,18 +70,16 @@ function renderCart() {
 }
 
 function removeItem(index) {
-    const cart = storageService.get('woodhub_cart') || [];
-    cart.splice(index, 1);
-    storageService.set('woodhub_cart', cart);
+    cartService.removeFromCart(index);
     renderCart();
     updateCartCount();
 }
 
 function submitQuotation() {
-    const cart = storageService.get('woodhub_cart') || [];
+    const cart = cartService.getCart();
     if (cart.length === 0) return;
 
-    const user = storageService.get('woodhub_user');
+    const user = orderService.getUser();
 
     if (!user) {
         // Prompt login if not logged in (optional based on requirements, but good practice)

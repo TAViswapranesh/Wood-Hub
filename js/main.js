@@ -1,4 +1,5 @@
-import storageService from './services/storageService.js';
+import cartService from './services/cartService.js';
+import orderService from './services/orderService.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     initMobileMenu();
@@ -81,10 +82,12 @@ function initLoginModal() {
             const mobile = phoneInput ? phoneInput.value : '';
 
             if (mobile) {
-                const user = { mobile, name: "User" }; // Default name if not provided
-                storageService.set('woodhub_user', user);
-
-                if (modal) modal.classList.remove('active');
+                const user = {
+                phone: phone,
+                loggedInAt: new Date().toISOString()
+            };
+            orderService.setUser(user);
+            modal.classList.remove('active');
                 alert('Logged in successfully!');
 
                 if (window.location.pathname.includes('contact.html')) {
@@ -99,10 +102,9 @@ function initLoginModal() {
  * Update Cart Badge Count
  */
 export function updateCartCount() {
-    const cart = storageService.get('woodhub_cart') || [];
     const countElement = document.querySelector('.cart-count');
     if (countElement) {
-        countElement.textContent = cart.length;
+        countElement.textContent = cartService.getCartCount();
     }
 }
 

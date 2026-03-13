@@ -134,13 +134,13 @@ function viewQuotationDetails(id) {
     quote.items.forEach((item, index) => {
         let itemDetails = '';
         for (const [key, val] of Object.entries(item.details)) {
-            if (key && val) itemDetails += `<div><span style="text-transform: capitalize; color: #666;">${key}:</span> <b>${val}</b></div>`;
+            if (key && val) itemDetails += `<div><span style="text-transform: capitalize; opacity: 0.8;">${key}:</span> <b>${val}</b></div>`;
         }
 
         detailsHTML += `
-            <div style="padding: 1rem; background: #f9f9f9; border-radius: 8px;">
-                <div style="font-weight: bold; margin-bottom: 0.5rem;">${index + 1}. ${formatQuotationType(item.type)}</div>
-                <div style="font-size: 0.9rem;">${itemDetails}</div>
+            <div style="padding: 1rem; background: var(--admin-bg-secondary); border: 1px solid var(--admin-border); border-radius: 8px;">
+                <div style="font-weight: bold; margin-bottom: 0.5rem; color: var(--admin-primary);">${index + 1}. ${formatQuotationType(item.type)}</div>
+                <div style="font-size: 0.9rem; color: var(--admin-text-primary);">${itemDetails}</div>
             </div>
         `;
     });

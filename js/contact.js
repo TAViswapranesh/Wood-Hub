@@ -1,4 +1,4 @@
-import storageService from './services/storageService.js';
+import orderService from './services/orderService.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     initContactForm();
@@ -23,13 +23,10 @@ function initContactForm() {
                 mobile,
                 email,
                 message,
-                date: new Date().toJSON()
+                date: new Date().toISOString()
             };
 
-            const messages = storageService.get('woodhub_messages') || [];
-            messages.push(newMessage);
-            storageService.set('woodhub_messages', messages);
-
+            orderService.addMessage(newMessage);
             showSuccess(contactForm);
         });
     }
@@ -52,8 +49,33 @@ function showSuccess(form) {
     }, 3000);
 }
 
+// New function to show error messages
+function showError(form, message) {
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (!submitBtn) return;
+
+    const originalText = submitBtn.innerText;
+    submitBtn.innerText = 'Error!';
+    submitBtn.style.backgroundColor = '#dc3545'; // Red color for error
+    submitBtn.disabled = true;
+
+    const errorMessageDiv = document.createElement('div');
+    errorMessageDiv.className = 'error-message';
+    errorMessageDiv.style.color = '#dc3545';
+    errorMessageDiv.style.marginTop = '10px';
+    errorMessageDiv.innerText = message;
+    form.insertBefore(errorMessageDiv, submitBtn.parentNode); // Insert before the submit button's parent
+
+    setTimeout(() => {
+        submitBtn.innerText = originalText;
+        submitBtn.style.backgroundColor = '';
+        submitBtn.disabled = false;
+        errorMessageDiv.remove();
+    }, 5000); // Show error for 5 seconds
+}
+
 function prefillForm() {
-    const user = storageService.get('woodhub_user');
+    const user = orderService.getUser();
     if (user) {
         if (user.name) {
             const nameEl = document.getElementById('name');

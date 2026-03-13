@@ -1,24 +1,18 @@
 /* ===================================
    ADMIN GALLERY MANAGEMENT MODULE
    =================================== */
-import storageService from '../../js/services/storageService.js';
-
-const GALLERY_STORAGE_KEY = 'woodhub_admin_gallery';
+import galleryService from '../../js/services/galleryService.js';
 
 /**
  * Get all gallery images from storage
  * @returns {Array}
  */
-function getAllGalleryImages() {
-    return storageService.get(GALLERY_STORAGE_KEY) || [];
-}
-
 /**
- * Save gallery images to storage
- * @param {Array} images 
+ * Get all gallery images from storage
+ * @returns {Array}
  */
-function saveGalleryImages(images) {
-    storageService.set(GALLERY_STORAGE_KEY, images);
+function getAllGalleryImages() {
+    return galleryService.getAdminGallery();
 }
 
 /**
@@ -26,15 +20,7 @@ function saveGalleryImages(images) {
  * @param {Object} imageData 
  */
 function addGalleryImage(imageData) {
-    const images = getAllGalleryImages();
-    const newImage = {
-        id: Date.now(),
-        ...imageData,
-        dateAdded: new Date().toISOString()
-    };
-    images.push(newImage);
-    saveGalleryImages(images);
-    return newImage;
+    return galleryService.addGalleryImage(imageData);
 }
 
 /**
@@ -42,9 +28,7 @@ function addGalleryImage(imageData) {
  * @param {number} id 
  */
 function deleteGalleryImage(id) {
-    const images = getAllGalleryImages();
-    const filtered = images.filter(img => img.id !== id);
-    saveGalleryImages(filtered);
+    galleryService.deleteGalleryImage(id);
 }
 
 /**

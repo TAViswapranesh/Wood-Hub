@@ -2,7 +2,8 @@
    ADMIN DASHBOARD MODULE
    =================================== */
 import orderService from '../../js/services/orderService.js';
-import storageService from '../../js/services/storageService.js';
+import hardwareService from '../../js/services/hardwareService.js';
+import galleryService from '../../js/services/galleryService.js';
 
 /**
  * Get total count of quotation requests
@@ -18,7 +19,7 @@ function getQuotationCount() {
  * @returns {number}
  */
 function getHardwareCount() {
-    const hardware = storageService.get('woodhub_admin_hardware') || [];
+    const hardware = hardwareService.getAdminHardware();
     return hardware.length;
 }
 
@@ -27,14 +28,38 @@ function getHardwareCount() {
  * @returns {number}
  */
 function getGalleryCount() {
-    const gallery = storageService.get('woodhub_admin_gallery') || [];
+    const gallery = galleryService.getAdminGallery();
     return gallery.length;
+}
+
+/**
+ * Get total count of messages
+ * @returns {number}
+ */
+function getMessageCount() {
+    const messages = orderService.getMessages();
+    return messages.length;
 }
 
 /**
  * Update dashboard statistics
  */
 function updateDashboardStats() {
+    // In a real app, this would fetch from a database or respective services
+    // Since we are mocking with localStorage via services, we get data from there.
+    
+    // Get Orders/Quotations
+    const orderCount = getQuotationCount();
+
+    // Get Hardware count
+    const hardwareCount = getHardwareCount();
+
+    // Get Gallery count
+    const galleryCount = getGalleryCount();
+
+    // Get Messages count
+    const messageCount = getMessageCount();
+
     // Update quotation count
     const quotationElement = document.getElementById('quotation-count');
     if (quotationElement) {
@@ -51,6 +76,12 @@ function updateDashboardStats() {
     const galleryElement = document.getElementById('gallery-count');
     if (galleryElement) {
         galleryElement.textContent = getGalleryCount();
+    }
+
+    // Update message count
+    const messageElement = document.getElementById('message-count');
+    if (messageElement) {
+        messageElement.textContent = getMessageCount();
     }
 }
 

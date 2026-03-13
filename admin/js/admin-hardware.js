@@ -1,9 +1,7 @@
 /* ===================================
    ADMIN HARDWARE MANAGEMENT MODULE
    =================================== */
-import storageService from '../../js/services/storageService.js';
-
-const HARDWARE_STORAGE_KEY = 'woodhub_admin_hardware';
+import hardwareService from '../../js/services/hardwareService.js';
 
 // Hardware categories
 const HARDWARE_CATEGORIES = [
@@ -20,15 +18,7 @@ const HARDWARE_CATEGORIES = [
  * @returns {Array}
  */
 function getAllHardware() {
-    return storageService.get(HARDWARE_STORAGE_KEY) || [];
-}
-
-/**
- * Save hardware items to storage
- * @param {Array} items 
- */
-function saveHardware(items) {
-    storageService.set(HARDWARE_STORAGE_KEY, items);
+    return hardwareService.getAdminHardware();
 }
 
 /**
@@ -36,15 +26,7 @@ function saveHardware(items) {
  * @param {Object} item 
  */
 function addHardwareItem(item) {
-    const items = getAllHardware();
-    const newItem = {
-        id: Date.now(),
-        ...item,
-        dateAdded: new Date().toISOString()
-    };
-    items.push(newItem);
-    saveHardware(items);
-    return newItem;
+    return hardwareService.addHardwareItem(item);
 }
 
 /**
@@ -53,14 +35,7 @@ function addHardwareItem(item) {
  * @param {Object} updatedData 
  */
 function updateHardwareItem(id, updatedData) {
-    const items = getAllHardware();
-    const index = items.findIndex(item => item.id === id);
-    if (index !== -1) {
-        items[index] = { ...items[index], ...updatedData };
-        saveHardware(items);
-        return items[index];
-    }
-    return null;
+    return hardwareService.updateHardwareItem(id, updatedData);
 }
 
 /**
@@ -68,9 +43,7 @@ function updateHardwareItem(id, updatedData) {
  * @param {number} id 
  */
 function deleteHardwareItem(id) {
-    const items = getAllHardware();
-    const filtered = items.filter(item => item.id !== id);
-    saveHardware(filtered);
+    hardwareService.deleteHardwareItem(id);
 }
 
 /**
@@ -79,8 +52,7 @@ function deleteHardwareItem(id) {
  * @returns {Object|null}
  */
 function getHardwareById(id) {
-    const items = getAllHardware();
-    return items.find(item => item.id === id) || null;
+    return hardwareService.getHardwareById(id);
 }
 
 /**

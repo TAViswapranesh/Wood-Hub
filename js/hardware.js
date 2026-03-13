@@ -1,4 +1,6 @@
-import storageService from './services/storageService.js';
+import cartService from './services/cartService.js';
+import hardwareService from './services/hardwareService.js';
+import orderService from './services/orderService.js';
 import { updateCartCount } from './main.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -6,6 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initHardware() {
+    renderHardwareGrid();
+
     const grid = document.querySelector('.hardware-grid');
     if (grid) {
         grid.addEventListener('click', (e) => {
@@ -17,15 +21,49 @@ function initHardware() {
             }
         });
     }
+}
 
-    // Handle modal login form if present and distinct from main.js
-    // If main.js handles 'login-form', then we should rename id in html to 'login-form'
-    // But hardware.html might have 'login-form-modal'.
-    // We will standardize ID in HTML to 'login-form' so main.js handles it.
+function renderHardwareGrid() {
+    const grid = document.querySelector('.hardware-grid');
+    if (!grid) return;
+
+    const products = hardwareService.getHardwareProducts();
+    let html = '';
+
+    products.forEach(item => {
+        // Construct spec string
+        let spec = item.size || '';
+        if (item.color) {
+            spec += (spec ? ' | ' : '') + item.color + ' Finish';
+        }
+        
+        let specData = item.size || '';
+        if (item.color) {
+            specData += (specData ? ' - ' : '') + item.color;
+        }
+
+        const imageHtml = item.image ? `<img src="${item.image}" alt="${item.name}" class="hw-img">` : 
+                          (item.thumbnail ? `<img src="${item.thumbnail}" alt="${item.name}" class="hw-img">` : '');
+
+        html += `
+            <div class="hw-card">
+                ${imageHtml}
+                <div class="hw-content">
+                    <div class="hw-title">${item.name}</div>
+                    <div class="hw-meta">${spec}</div>
+                    <button class="btn btn-outline btn-add-cart"
+                        style="width: 100%; padding: 6px; font-size: 0.9rem;" data-name="${item.name}"
+                        data-spec="${specData}">Add to Quote</button>
+                </div>
+            </div>
+        `;
+    });
+
+    grid.innerHTML = html;
 }
 
 function addToCart(name, spec) {
-    const user = storageService.get('woodhub_user');
+    const user = orderService.getUser();
     if (!user) {
         const modal = document.getElementById('login-modal');
         if (modal) modal.classList.add('active');
@@ -42,9 +80,7 @@ function addToCart(name, spec) {
         }
     };
 
-    const cart = storageService.get('woodhub_cart') || [];
-    cart.push(item);
-    storageService.set('woodhub_cart', cart);
+    cartService.addToCart(item);
 
     updateCartCount();
     alert(`Added ${name} to Quotation!`);

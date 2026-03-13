@@ -1,4 +1,4 @@
-import storageService from '../../js/services/storageService.js';
+import orderService from '../../js/services/orderService.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     // Window helpers need to be defined before loading if they are used inline
@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function loadMessages() {
-    const messages = storageService.get('woodhub_messages') || [];
+    const messages = orderService.getMessages();
     const messagesTableBody = document.getElementById('messages-table-body');
     const messageCount = document.getElementById('message-count');
 
@@ -45,7 +45,7 @@ function loadMessages() {
 }
 
 function viewMessage(id) {
-    const messages = storageService.get('woodhub_messages') || [];
+    const messages = orderService.getMessages();
     const msg = messages.find(m => m.id === id);
 
     if (msg) {
@@ -55,9 +55,9 @@ function viewMessage(id) {
 
 function deleteMessage(id) {
     if (confirm('Are you sure you want to delete this message?')) {
-        let messages = storageService.get('woodhub_messages') || [];
+        let messages = orderService.getMessages();
         messages = messages.filter(m => m.id !== id);
-        storageService.set('woodhub_messages', messages);
+        orderService.saveMessages(messages);
         loadMessages();
     }
 }

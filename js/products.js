@@ -1,5 +1,6 @@
-import storageService from './services/storageService.js';
-import { productAssetMap, getProductConfig } from './data/productsData.js';
+import { productAssetMap, getProductConfig, products } from './data/productsData.js';
+import cartService from './services/cartService.js';
+import orderService from './services/orderService.js';
 import { updateCartCount } from './main.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -65,10 +66,13 @@ function initQuotationForm() {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            const user = storageService.get('woodhub_user');
+            // Check auth state
+            const user = orderService.getUser();
             if (!user) {
-                const loginModal = document.getElementById('login-modal');
-                if (loginModal) loginModal.classList.add('active');
+                alert('Please register/login using the profile icon first to request quotes.');
+                // Optionally, show login modal if desired, but alert is simpler for now.
+                // const loginModal = document.getElementById('login-modal');
+                // if (loginModal) loginModal.classList.add('active');
                 return;
             }
 
@@ -92,9 +96,7 @@ function addToCart(form) {
         item.details[key] = value;
     }
 
-    const cart = storageService.get('woodhub_cart') || [];
-    cart.push(item);
-    storageService.set('woodhub_cart', cart);
+    cartService.addToCart(item);
 
     updateCartCount();
     alert('Added to Quotation Cart!');
